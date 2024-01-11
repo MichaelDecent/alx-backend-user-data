@@ -19,10 +19,7 @@ def filter_datum(
     returns the log message obfuscated
     """
     for pii_data in fields:
-        message = re.sub(
-            rf"{pii_data}=([^{separator}]*)",
-            f"{pii_data}={redaction}", message
-        )
+        message = re.sub(rf"{pii_data}=([^{separator}]*)", f"{pii_data}={redaction}", message)
     return message
 
 
