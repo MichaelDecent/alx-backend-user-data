@@ -2,7 +2,7 @@
 """This module contain a functions that handles personal data filters and
 returns the log message obfuscated
 """
-from typing import List, Sequence
+from typing import List
 import re
 import logging
 import os
@@ -12,9 +12,8 @@ import mysql.connector
 PII_FIELDS = ("name", "email", "ssn", "password", "phone")
 
 
-def filter_datum(
-    fields: List[str], redaction: str,
-        message: str, separator: str) -> str:
+def filter_datum(fields: List[str], redaction: str,
+                 message: str, separator: str) -> str:
     """
     returns the log message obfuscated
     """
@@ -33,7 +32,7 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields: Sequence[str]):
+    def __init__(self, fields: List[str]):
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
