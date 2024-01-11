@@ -13,16 +13,17 @@ import mysql.connector
 PII_FIELDS = ("name", "email", "ssn", "password", "phone")
 
 
-def filter_datum(fields: List[str],
-                 redaction: str,
-                 message: List[str],
-                 separator: str) -> str:
+def filter_datum(
+    fields: List[str], redaction: str,
+        message: List[str], separator: str) -> str:
     """
     returns the log message obfuscated
     """
     for pii_data in fields:
-        message = re.sub(rf'{pii_data}=([^{separator}]*)',
-                         f'{pii_data}={redaction}', message)
+        message = re.sub(
+            rf"{pii_data}=([^{separator}]*)",
+            f"{pii_data}={redaction}", message
+        )
     return message
 
 
@@ -41,15 +42,15 @@ class RedactingFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         message = super(RedactingFormatter, self).format(record)
-        return filter_datum(
-            self.fields, self.REDACTION, message, self.SEPARATOR)
+        return filter_datum(self.fields, self.REDACTION,
+                            message, self.SEPARATOR)
 
 
 def get_logger() -> logging.Logger:
     """
     creates a logger
     """
-    logger = logging.getlogger('user_data')
+    logger = logging.getlogger("user_data")
     logger.setlevel(logging.INFO)
 
     formatter = logging.Formatter(RedactingFormatter(PII_FIELDS))
@@ -64,9 +65,9 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     creates a database connection
     """
     db_connection = mysql.connector.connect(
-          host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
-          user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
-          password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
-          database=os.getenv('PERSONAL_DATA_DB_NAME')
+        host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+        user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+        database=os.getenv("PERSONAL_DATA_DB_NAME"),
     )
     return db_connection
