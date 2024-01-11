@@ -42,15 +42,16 @@ class RedactingFormatter(logging.Formatter):
 
 
 def get_logger() -> logging.Logger:
-    """Create new customized logger i.e logging.Logger object"""
-    newLogger = logging.getLogger("user_data")
+    """creates a logger"""
+    logger = logging.getlogger("user_data")
+    logger.setlevel(logging.INFO)
+
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
-    newLogger.setLevel(logging.INFO)
-    newLogger.propagate = False
-    newLogger.addHandler(stream_handler)
-    return newLogger
 
+    logger.propagate = False
+    logger.addHandler(stream_handler)
+    return logger
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
