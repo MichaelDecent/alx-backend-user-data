@@ -11,6 +11,6 @@ def hash_password(password: str) -> bytes:
 
 def is_valid(hashed_password: bytes, password: str) -> bool:
     """Validates an hashed password and returns a boolean"""
-    if bcrypt.checkpw(b"password", hashed_password):
+    if bcrypt.checkpw(password.encode('utf-8'), hashed_password):
         return True
     return False
