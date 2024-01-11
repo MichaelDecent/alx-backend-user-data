@@ -45,6 +45,8 @@ def get_logger() -> logging.Logger:
     """creates a logger"""
     logger = logging.getlogger("user_data")
     logger.setlevel(logging.INFO)
+    logger.propagate = False
+
 
     formatter = logging.Formatter(RedactingFormatter(PII_FIELDS))
     stream_handler = logging.StreamHandler()
