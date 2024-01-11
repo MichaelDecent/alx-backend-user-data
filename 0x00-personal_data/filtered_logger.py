@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""
-This module contain a function filter_datum that
-returns the log message obfuscated:
+"""This module contain a functions that handles personal data filters and
+returns the log message obfuscated
 """
 from typing import List, Sequence
 import re
