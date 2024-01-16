@@ -67,7 +67,10 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
 
 def main() -> None:
-    """"""
+    """
+    obtain a database connection using get_db and retrieve
+    all rows in the users table and display each row 
+    """
     db_connection = get_db()
     logger = get_logger()
 
