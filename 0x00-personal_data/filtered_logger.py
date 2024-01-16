@@ -70,7 +70,8 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         )
         return db_connection
     except Exception as error:
-        raise error
+        print(error)
+
 
 def main() -> None:
     """
