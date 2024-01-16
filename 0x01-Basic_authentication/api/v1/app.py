@@ -42,15 +42,14 @@ def forbidden_error(error) -> str:
 
 @app.before_request
 def filter_request():
-    if auth == None:
-        pass
+    """filters any request before the request is used by the endpoints"""
     excluded_paths = ["/api/v1/status/", "/api/v1/unauthorized/", "/api/v1/forbidden/"]
-    if auth.require_auth(request.path, excluded_paths):
-        pass
-    if auth.authorization_header(request) is None:
-        abort(401)
-    if auth.current_user(request) is None:
-        abort(403)
+    if auth is not None:
+        if auth.require_auth(request.path, excluded_paths):
+            if auth.authorization_header(request) is None:
+                abort(401)
+            if auth.current_user(request) is None:
+                abort(403)
 
 
 if __name__ == "__main__":
