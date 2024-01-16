@@ -83,10 +83,21 @@ def main() -> None:
     """
     db_connection = get_db()
     logger = get_logger()
-
+    filtered_field = "name,email,phone,ssn,password,ip,last_login,user_agent"
+    field_titles = filtered_field.split(',')
+    sql_query = f'SELECT {filtered_field} FROM users;'
     with db_connection.cursor() as cursor:
-        cursor.excute('SELECT * FROM users;')
+        cursor.execute(sql_query)
         rows = cursor.fetchall()
 
         for row in rows:
-            each_row = RedactingFormatter(PII_FIELDS)
+            msg = map(
+                lambda title, value: f"{title}={value}; ", field_titles, row)
+            message = ''.join(list(msg))
+            args = ("user_data", logging.INFO, None, None, message, None, None)
+            log_record = logging.LogRecord(*args)
+            logger.handle(log_record)
+
+
+if __name__ == ('__main__'):
+    main()
