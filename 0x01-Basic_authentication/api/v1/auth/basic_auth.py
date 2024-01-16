@@ -33,7 +33,7 @@ class BasicAuth(Auth):
     ) -> str:
         """
         Returns the decoded value of a Base64
-        string base64_authorization_header
+        string base64_authorization_header which the username and password
         """
         if (
             base64_authorization_header is None
@@ -80,3 +80,13 @@ class BasicAuth(Auth):
         if not current_user[0].is_valid_password(user_pwd):
             return None
         return current_user[0]
+    
+    def current_user(self, request=None) -> TypeVar("User"):
+        """
+        Retrieves the current user object
+        """
+        header = self.authorization_header(request)
+        encoded_string  = self.extract_base64_authorization_header(header)
+        user_credentials = self.decode_base64_authorization_header(encoded_string)
+        user_email, user_pwd = self.extract_user_credentials(user_credentials)
+        return self.user_object_from_credentials(user_email, user_pwd)
