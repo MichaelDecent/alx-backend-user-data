@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""This module contain a functions that handles personal data filters and
+"""
+This module contain a functions that handles personal data filters and
 returns the log message obfuscated
 """
 from typing import List
@@ -36,6 +37,10 @@ class RedactingFormatter(logging.Formatter):
         self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
+        """
+        filter values in incoming log records using filter_datum
+        and return a sring in a specifed format
+        """
         message = super(RedactingFormatter, self).format(record)
         return filter_datum(self.fields, self.REDACTION,
                             message, self.SEPARATOR)
