@@ -15,8 +15,8 @@ class BasicAuth(Auth):
     """
 
     def extract_base64_authorization_header(
-            self, authorization_header: str
-            ) -> str:
+        self, authorization_header: str
+    ) -> str:
         """
         Returns the Base64 part of the Authorization
         header for a Basic Authentication
@@ -80,13 +80,14 @@ class BasicAuth(Auth):
         if not current_user[0].is_valid_password(user_pwd):
             return None
         return current_user[0]
-    
+
     def current_user(self, request=None) -> TypeVar("User"):
         """
         Retrieves the current user object
         """
         header = self.authorization_header(request)
-        encoded_string  = self.extract_base64_authorization_header(header)
-        user_credentials = self.decode_base64_authorization_header(encoded_string)
+        encoded_string = self.extract_base64_authorization_header(header)
+        user_credentials = self.decode_base64_authorization_header(
+            encoded_string)
         user_email, user_pwd = self.extract_user_credentials(user_credentials)
         return self.user_object_from_credentials(user_email, user_pwd)
