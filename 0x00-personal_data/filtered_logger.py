@@ -61,14 +61,17 @@ def get_logger() -> logging.Logger:
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """creates a database connection"""
-    db_connection = mysql.connector.connect(
-        host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
-        user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
-        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
-        database=os.getenv("PERSONAL_DATA_DB_NAME", ""),
-        port=3306
-    )
-    return db_connection
+    try:
+        db_connection = mysql.connector.connect(
+            host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+            user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+            password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+            database=os.getenv("PERSONAL_DATA_DB_NAME", ""),
+            port=3306
+        )
+        return db_connection
+    except Exception as error:
+        return error
 
 
 def main() -> None:
