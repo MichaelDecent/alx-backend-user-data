@@ -67,7 +67,6 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
             user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
             password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
             database=os.getenv("PERSONAL_DATA_DB_NAME", ""),
-            port=3306
         )
         return db_connection
     except Exception as error:
