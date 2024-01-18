@@ -55,7 +55,8 @@ def filter_request():
     request.current_user = auth.current_user(request)
     if auth is not None:
         if auth.require_auth(request.path, excluded_paths):
-            if not auth.authorization_header(request) and not auth.session_cookie(request):
+            if not auth.authorization_header(
+                    request) and not auth.session_cookie(request):
                 abort(401)
             if request.current_user is None:
                 abort(403)
