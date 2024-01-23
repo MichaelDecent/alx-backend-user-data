@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import bcrypt
 from user import User
 from db import DB
