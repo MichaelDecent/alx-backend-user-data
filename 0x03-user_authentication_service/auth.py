@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+This Module handles authtentication functions 
+"""
 import bcrypt
 from user import User
 from db import DB
