@@ -5,7 +5,7 @@ This Module handles authtentication functions
 import bcrypt
 from user import User
 from db import DB
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound
 
 
 def _hash_password(password: str) -> bytes:
