@@ -21,11 +21,11 @@ def get_json():
 
 @app.route("/users", methods=["POST"])
 def register_user():
-    """Registers new user
-    """
+    """Registers new user"""
     response = request.form.to_dict()
     try:
-        new_user = AUTH.register_user(response.get('email'), response.get('password'))
+        new_user = AUTH.register_user(
+            response.get("email"), response.get("password"))
     except ValueError:
         return jsonify({"message": "email already registered"})
 
