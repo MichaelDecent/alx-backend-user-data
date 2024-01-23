@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-This Module handles authtentication functions 
+This Module handles authtentication functions
 """
 import bcrypt
 from user import User
@@ -8,9 +8,9 @@ from db import DB
 from sqlalchemy.exc import NoResultFound
 
 
-def _hash_password(password: str):
+def _hash_password(password: str) -> bytes:
     """Takes in a password string arguments and returns bytes"""
-    return bcrypt.hashpw(b"password", bcrypt.gensalt())
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
 
 class Auth:
