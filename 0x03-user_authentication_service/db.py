@@ -53,7 +53,10 @@ class DB:
         """update the user’s attributes as passed in the method’s
         arguments then commit changes to the database
         """
-        user = self.find_user_by(id=user_id)
+        try:
+            user = self.find_user_by(id=user_id)
+        except Exception:
+            return None
 
         for key, value in kwargs.items():
             if not hasattr(user, key):
