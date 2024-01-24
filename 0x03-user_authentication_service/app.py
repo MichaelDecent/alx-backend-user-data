@@ -24,7 +24,8 @@ def register_user():
     """Registers new user"""
     response = request.form.to_dict()
     try:
-        new_user = AUTH.register_user(response.get("email"), response.get("password"))
+        new_user = AUTH.register_user(
+            response.get("email"), response.get("password"))
     except ValueError:
         return jsonify({"message": "email already registered"})
 
@@ -39,7 +40,8 @@ def login():
     if not AUTH.valid_login(response.get("email"), response.get("password")):
         abort(401)
 
-    return jsonify({"email": f"{response.get('email')}", "message": "logged in"})
+    return jsonify(
+        {"email": f"{response.get('email')}", "message": "logged in"})
 
 
 if __name__ == "__main__":
