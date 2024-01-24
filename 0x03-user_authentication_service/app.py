@@ -12,7 +12,7 @@ AUTH = Auth()
 
 
 @app.route("/", methods=["GET"])
-def get_json():
+def get_json() -> str:
     """
     returns a JSON payload
     """
@@ -20,35 +20,39 @@ def get_json():
 
 
 @app.route("/users", methods=["POST"])
-def users():
+def users() -> str:
     """Registers new user"""
     form_data = request.form.to_dict()
+
+    email = form_data.get("email")
+    password = form_data.get("password")
+
     try:
-        new_user = AUTH.register_user(
-            form_data.get("email"), form_data.get("password"))
+        new_user = AUTH.register_user(email, password)
     except ValueError:
         return jsonify({"message": "email already registered"})
 
-    return jsonify({"email": f"{new_user.email}", "message": "user created"})
+    return jsonify({"email": new_user.email, "message": "user created"})
 
 
 @app.route("/sessions", methods=["POST"])
-def login():
+def login() -> str:
     """Logs in a user"""
     form_data = request.form.to_dict()
+    email = form_data.get("email")
+    password = form_data.get("password")
 
-    if not AUTH.valid_login(form_data.get("email"), form_data.get("password")):
+    if not AUTH.valid_login(email, password):
         abort(401)
 
-    session_id = AUTH.create_session(form_data.get("email"))
-    response = jsonify(
-        {"email": form_data.get('email'), "message": "logged in"})
+    session_id = AUTH.create_session(email)
+    response = jsonify({"email": email, "message": "logged in"})
     response.set_cookie("session_id", session_id)
     return response
 
 
 @app.route("/sessions", methods=["DELETE"])
-def logout():
+def logout() -> str:
     """logs the user out"""
     session_id = request.cookies.get('session_id')
     user = AUTH.get_user_from_session_id(session_id)
@@ -60,7 +64,7 @@ def logout():
 
 
 @app.route("/profile", methods=["GET"])
-def profile():
+def profile() -> str:
     """Gets the profile of the user"""
     session_id = request.cookies.get('session_id')
     user = AUTH.get_user_from_session_id(session_id)
