@@ -39,6 +39,7 @@ def users() -> str:
 def login() -> str:
     """Logs in a user"""
     form_data = request.form.to_dict()
+
     email = form_data.get("email")
     password = form_data.get("password")
 
