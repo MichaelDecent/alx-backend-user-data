@@ -26,7 +26,7 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def register_user(self, email: str, password: str) -> User:
+    def register_user(self, email: str, password: str):
         """Regitsers a user"""
         try:
             user = self._db.find_user_by(email=email)
@@ -50,11 +50,12 @@ class Auth:
         """creates a database session"""
         try:
             user = self._db.find_user_by(email=email)
-            session_id = _generate_uuid()
-            self._db.update_user(user.id, session_id=session_id)
-            return session_id
         except NoResultFound:
             return None
+
+        session_id = _generate_uuid()
+        self._db.update_user(user.id, session_id=session_id)
+        return session_id
 
     def get_user_from_session_id(self, session_id: str) -> Union[None, User]:
         """finds and retrieves user by session ID"""
@@ -65,7 +66,7 @@ class Auth:
             return user
         except NoResultFound:
             return None
-        
+
     def destroy_session(self, user_id: str) -> None:
         """destroys the session"""
         try:

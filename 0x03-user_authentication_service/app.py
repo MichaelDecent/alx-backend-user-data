@@ -2,7 +2,7 @@
 """
 Starts A flask App
 """
-from flask import Flask, jsonify, request, abort, url_for, redirect
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
 
