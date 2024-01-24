@@ -41,7 +41,8 @@ def login():
         abort(401)
 
     session_id = AUTH.create_session(form_data.get("email"))
-    response = jsonify({"email": form_data.get('email'), "message": "logged in"})
+    response = jsonify(
+        {"email": form_data.get('email'), "message": "logged in"})
     response.set_cookie("session_id", session_id)
     return response
 
@@ -57,9 +58,10 @@ def logout():
     else:
         abort(403)
 
+
 @app.route("/profile", methods=["GET"])
 def profile():
-    """"""
+    """Gets the profile of the user"""
     session_id = request.cookies.get('session_id')
     user = AUTH.get_user_from_session_id(session_id)
     print(user)
