@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Starta A flask App
+Starts A flask App
 """
 from flask import Flask, jsonify, request, abort
 from auth import Auth
@@ -24,8 +24,7 @@ def register_user():
     """Registers new user"""
     response = request.form.to_dict()
     try:
-        new_user = AUTH.register_user(
-            response.get("email"), response.get("password"))
+        new_user = AUTH.register_user(response.get("email"), response.get("password"))
     except ValueError:
         return jsonify({"message": "email already registered"})
 
@@ -40,8 +39,7 @@ def login():
     if not AUTH.valid_login(response.get("email"), response.get("password")):
         abort(401)
 
-    return jsonify(
-        {"email": f"{response.get('email')}", "message": "logged in"})
+    return jsonify({"email": f"{response.get('email')}", "message": "logged in"})
 
 
 if __name__ == "__main__":
