@@ -71,6 +71,5 @@ class Auth:
         """destroys the session"""
         try:
             self._db.update_user(user_id, id=None)
-            return None
         except Exception:
             return None
